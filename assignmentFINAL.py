@@ -46,7 +46,7 @@ def create():
         # Define the router name
         router_name = 'dargcl1-rtr'
 
-        # Find the public network by name ("public-net")
+        # Find public-net
         public_network_name = 'public-net'
         public_net = conn.network.find_network(public_network_name)
 
@@ -121,7 +121,7 @@ def create():
             networks=[{"uuid": network.id}], key_name='cameronKey',
             security_groups=[{"name": "default"}])  # Assigning the security group
 
-        # Wait for server creation
+        # Wait  server creation
         server = conn.compute.wait_for_server(server)
 
         # Assign the floating IP to the web server
@@ -155,7 +155,7 @@ def run():
 
     for server_name in server_names:
         existing_servers = conn.compute.servers(name=server_name)
-        server = next(existing_servers, None)  # Get the first server or None if it doesn't exist
+        server = next(existing_servers, None)  # Get  server or None not doesn't exist
 
         if server:
             if server.status == 'ACTIVE':
@@ -166,9 +166,8 @@ def run():
         else:
             print(f"Server '{server_name}' does not exist.")
 
-# Rest of the code remains unchanged
 
-
+# almost the same as run 
 def stop():
     # Import the openstack module within the function
     import openstack
@@ -195,7 +194,7 @@ def stop():
         else:
             print(f"Server '{server_name}' does not exist.")
 
-# Rest of the code remains unchanged
+
 
 
 def destroy():
@@ -243,7 +242,7 @@ def destroy():
         # Clear router interfaces to force deletion
         for port in conn.network.ports(device_id=router.id):
             conn.network.remove_interface_from_router(router, port_id=port.id)
-        # Now delete the router
+        #  delete the router
         try:
             conn.network.delete_router(router.id)
             print("Deleted Router 'dargcl1-rtr'.")
@@ -260,8 +259,6 @@ def destroy():
     if network:
         conn.network.delete_network(network.id)
         print("Deleted Network 'dargcl1-net'.")
-
-# Rest of the code remains unchanged
 
 
 
@@ -280,7 +277,7 @@ def status():
 
     for server_name in server_names:
         existing_servers = conn.compute.servers(name=server_name)
-        server = next(existing_servers, None)  # Get the first server or None if it doesn't exist
+        server = next(existing_servers, None)  
 
         if server:
             print(f"Server '{server_name}' State: {server.status}")
@@ -295,9 +292,6 @@ def status():
                 print(f"Server '{server_name}' has no Floating IP assigned.")
         else:
             print(f"Server '{server_name}' does not exist.")
-
-# Rest of the code remains unchanged
-
 
 
 if __name__ == '__main__':
@@ -316,4 +310,3 @@ if __name__ == '__main__':
 
     action = operations.get(operation, lambda: print('{}: no such operation'.format(operation)))
     action()
-
